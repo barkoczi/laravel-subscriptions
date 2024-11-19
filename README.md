@@ -43,7 +43,7 @@ It's simple architecture, accompanied by powerful underlying to afford solid pla
 
 2. Publish resources (migrations and config files):
     ```shell
-    php artisan vendor:publish --provider="Laravelcm\Subscriptions\SubscriptionServiceProvider"
+    php artisan vendor:publish --provider="Aercode\Subscriptions\SubscriptionServiceProvider"
     ```
 
 3. Execute migrations via the following command:
@@ -63,7 +63,7 @@ It's simple architecture, accompanied by powerful underlying to afford solid pla
 ```php
 namespace App\Models;
 
-use Laravelcm\Subscriptions\Traits\HasPlanSubscriptions;
+use Aercode\Subscriptions\Traits\HasPlanSubscriptions;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -79,9 +79,9 @@ That's it, we only have to use that trait in our User model! Now your users may 
 ### Create a Plan
 
 ```php
-use Laravelcm\Subscriptions\Models\Plan;
-use Laravelcm\Subscriptions\Models\Feature;
-use Laravelcm\Subscriptions\Interval;
+use Aercode\Subscriptions\Models\Plan;
+use Aercode\Subscriptions\Models\Feature;
+use Aercode\Subscriptions\Interval;
 
 $plan = Plan::create([
     'name' => 'Pro',
@@ -110,7 +110,7 @@ $plan->features()->saveMany([
 You can query the plan for further details, using the intuitive API as follows:
 
 ```php
-use Laravelcm\Subscriptions\Models\Plan;
+use Aercode\Subscriptions\Models\Plan;
 
 $plan = Plan::find(1);
 
@@ -137,8 +137,8 @@ Both `$plan->features` and `$plan->subscriptions` are collections, driven from r
 Say you want to show the value of the feature _pictures_per_listing_ from above. You can do so in many ways:
 
 ```php
-use Laravelcm\Subscriptions\Models\Feature;
-use Laravelcm\Subscriptions\Models\Subscription;
+use Aercode\Subscriptions\Models\Feature;
+use Aercode\Subscriptions\Models\Subscription;
 
 // Use the plan instance to get feature's value
 $amountOfPictures = $plan->getFeatureBySlug('pictures_per_listing')->value;
@@ -155,7 +155,7 @@ $amountOfPictures = Subscription::find(1)->getFeatureValue('pictures_per_listing
 You can subscribe a user to a plan by using the `newSubscription()` function available in the `HasPlanSubscriptions` trait. First, retrieve an instance of your subscriber model, which typically will be your user model and an instance of the plan your user is subscribing to. Once you have retrieved the model instance, you may use the `newSubscription` method to create the model's subscription.
 
 ```php
-use Laravelcm\Subscriptions\Models\Plan;
+use Aercode\Subscriptions\Models\Plan;
 use App\Models\User;
 
 $user = User::find(1);
@@ -171,8 +171,8 @@ The first argument passed to `newSubscription` method should be the title of the
 You can change subscription plan easily as follows:
 
 ```php
-use Laravelcm\Subscriptions\Models\Plan;
-use Laravelcm\Subscriptions\Models\Subscription;
+use Aercode\Subscriptions\Models\Plan;
+use Aercode\Subscriptions\Models\Subscription;
 
 $plan = Plan::find(2);
 $subscription = Subscription::find(1);
@@ -188,7 +188,7 @@ If both plans (current and new plan) have the same billing frequency (e.g., `inv
 Plan features are great for fine-tuning subscriptions, you can top-up certain feature for X times of usage, so users may then use it only for that amount. Features also have the ability to be resettable and then it's usage could be expired too. See the following examples:
 
 ```php
-use Laravelcm\Subscriptions\Models\Feature;
+use Aercode\Subscriptions\Models\Feature;
 
 // Find plan feature
 $feature = Feature::where('name', 'listing_duration_days')->first();
@@ -302,7 +302,7 @@ $user->planSubscription('main')->cancel(true);
 #### Subscription Model
 
 ```php
-use Laravelcm\Subscriptions\Models\Subscription;
+use Aercode\Subscriptions\Models\Subscription;
 use App\Models\User;
 
 // Get subscriptions by plan
@@ -330,10 +330,10 @@ $subscriptions = Subscription::findEndedPeriod()->get();
 **Laravel Subscriptions** uses 4 models:
 
 ```php
-Laravelcm\Subscriptions\Models\Plan;
-Laravelcm\Subscriptions\Models\Feature;
-Laravelcm\Subscriptions\Models\Subscription;
-Laravelcm\Subscriptions\Models\SubscriptionUsage;
+Aercode\Subscriptions\Models\Plan;
+Aercode\Subscriptions\Models\Feature;
+Aercode\Subscriptions\Models\Subscription;
+Aercode\Subscriptions\Models\SubscriptionUsage;
 ```
 
 ## Changelog

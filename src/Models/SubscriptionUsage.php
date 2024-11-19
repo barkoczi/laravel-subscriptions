@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions\Models;
+namespace Aercode\Subscriptions\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,15 +21,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Feature $feature
  * @property-read Subscription $subscription
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage byFeatureSlug($featureSlug)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereFeatureId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereSubscriptionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereUsed($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\SubscriptionUsage whereValidUntil($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage byFeatureSlug($featureSlug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereFeatureId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereSubscriptionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereUsed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\SubscriptionUsage whereValidUntil($value)
  */
 class SubscriptionUsage extends Model
 {

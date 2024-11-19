@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions;
+namespace Aercode\Subscriptions;
 
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -19,13 +19,13 @@ final class SubscriptionServiceProvider extends PackageServiceProvider
                 'create_plan_features_table',
                 'create_plan_subscriptions_table',
                 'create_plan_subscription_usage_table',
-                'remove_unique_slug_on_subscriptions_table',
+                //'remove_unique_slug_on_subscriptions_table',
             ])
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
-                    ->askToStarRepoOnGitHub('laravelcm/laravel-subscriptions');
+                    ->askToStarRepoOnGitHub('barkoczi/laravel-subscriptions');
             });
     }
 }

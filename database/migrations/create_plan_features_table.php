@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->foreignIdFor(config('laravel-subscriptions.models.plan'));
             $table->json('name');
-            $table->string('slug')->unique();
+            $table->string('slug')->index();
             $table->json('description')->nullable();
             $table->string('value');
             $table->unsignedSmallInteger('resettable_period')->default(0);

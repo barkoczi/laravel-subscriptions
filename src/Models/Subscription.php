@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions\Models;
+namespace Aercode\Subscriptions\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Laravelcm\Subscriptions\Services\Period;
-use Laravelcm\Subscriptions\Traits\BelongsToPlan;
-use Laravelcm\Subscriptions\Traits\HasSlug;
-use Laravelcm\Subscriptions\Traits\HasTranslations;
+use Aercode\Subscriptions\Services\Period;
+use Aercode\Subscriptions\Traits\BelongsToPlan;
+use Aercode\Subscriptions\Traits\HasSlug;
+use Aercode\Subscriptions\Traits\HasTranslations;
 use LogicException;
 use Spatie\Sluggable\SlugOptions;
 
@@ -34,30 +34,30 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read Plan $plan
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\SubscriptionUsage[] $usage
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Aercode\Subscriptions\Models\SubscriptionUsage[] $usage
  * @property-read Model $subscriber
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription byPlanId($planId)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription findEndedPeriod()
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription findEndedTrial()
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription findEndingPeriod($dayRange = 3)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription findEndingTrial($dayRange = 3)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription ofSubscriber(\Illuminate\Database\Eloquent\Model $subscriber)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereCanceledAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereCancelsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereEndsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription wherePlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereStartsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereTrialEndsAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereSubscriberId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Subscription whereSubscriberType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription byPlanId($planId)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription findEndedPeriod()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription findEndedTrial()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription findEndingPeriod($dayRange = 3)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription findEndingTrial($dayRange = 3)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription ofSubscriber(\Illuminate\Database\Eloquent\Model $subscriber)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereCanceledAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereCancelsAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereEndsAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription wherePlanId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereStartsAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereTrialEndsAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereSubscriberId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Subscription whereSubscriberType($value)
  */
 class Subscription extends Model
 {

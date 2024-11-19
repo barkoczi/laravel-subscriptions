@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-use Laravelcm\Subscriptions\Models\Feature;
-use Laravelcm\Subscriptions\Models\Plan;
-use Laravelcm\Subscriptions\Models\Subscription;
-use Laravelcm\Subscriptions\Models\SubscriptionUsage;
+use Aercode\Subscriptions\Models\Feature;
+use Aercode\Subscriptions\Models\Plan;
+use Aercode\Subscriptions\Models\PlanProvider;
+use Aercode\Subscriptions\Models\Subscription;
+use Aercode\Subscriptions\Models\SubscriptionUsage;
 
 return [
 
@@ -19,6 +20,7 @@ return [
 
     'tables' => [
         'plans' => 'plans',
+        'plans_providers' => 'plans_providers',
         'features' => 'features',
         'subscriptions' => 'subscriptions',
         'subscription_usage' => 'subscription_usage',
@@ -37,9 +39,12 @@ return [
 
     'models' => [
         'plan' => Plan::class,
+        'plan_provider' => PlanProvider::class,
         'feature' => Feature::class,
         'subscription' => Subscription::class,
         'subscription_usage' => SubscriptionUsage::class,
     ],
+
+    'stripe_enabled' => env('SUBSCRIPTION_STRIPE_ENABLED', false),
 
 ];

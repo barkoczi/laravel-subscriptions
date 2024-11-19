@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions\Traits;
+namespace Aercode\Subscriptions\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug as BaseHasSlug;

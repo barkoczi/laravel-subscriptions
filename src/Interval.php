@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions;
+namespace Aercode\Subscriptions;
 
 enum Interval: string
 {

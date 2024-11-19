@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions\Models;
+namespace Aercode\Subscriptions\Models;
 
+use Aercode\Subscriptions\Traits\HasSlug;
+use Aercode\Subscriptions\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravelcm\Subscriptions\Traits\HasSlug;
-use Laravelcm\Subscriptions\Traits\HasTranslations;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\SlugOptions;
@@ -37,32 +37,32 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property \Carbon\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\Feature[] $features
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravelcm\Subscriptions\Models\Subscription[] $subscriptions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Aercode\Subscriptions\Models\Feature[] $features
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Aercode\Subscriptions\Models\Subscription[] $subscriptions
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan ordered($direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereActiveSubscribersLimit($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereCurrency($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereGraceInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereGracePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereInvoiceInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereInvoicePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereProrateDay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereProrateExtendDue($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereProratePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereSignupFee($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereSortOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereTrialInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereTrialPeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Laravelcm\Subscriptions\Models\Plan whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan ordered($direction = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereActiveSubscribersLimit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereCurrency($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereGraceInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereGracePeriod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereInvoiceInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereInvoicePeriod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereProrateDay($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereProrateExtendDue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereProratePeriod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereSignupFee($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereSortOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereTrialInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereTrialPeriod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Aercode\Subscriptions\Models\Plan whereUpdatedAt($value)
  */
 class Plan extends Model implements Sortable
 {
@@ -127,6 +127,69 @@ class Plan extends Model implements Sortable
             $plan->features()->delete();
             $plan->subscriptions()->delete();
         });
+
+        static::created(function ($plan): void {
+            //create stripe product
+            if (config('laravel-subscriptions.stripe_enabled') && config('cashier.key')) {
+                $stripe = new \Stripe\StripeClient(
+                    config('cashier.secret')
+                );
+                $stripeProduct = $stripe->products->create([
+                    'name' => $plan->name,
+                    'description' => $plan->description,
+                    'default_price_data' => [
+                        'currency' => $plan->currency,
+                        'unit_amount' => $plan->price * 100,
+                        'recurring' => [
+                            'interval' => $plan->invoice_interval,
+                            'interval_count' => $plan->invoice_period,
+                        ],
+                    ],
+                ]);
+
+                $plan->providers()->create([
+                    'provider' => 'stripe',
+                    'provider_product_id' => $stripeProduct->id,
+                    'provider_price_id' => $stripeProduct->default_price,
+                ]);
+            }
+        });
+
+        static::updated(function ($plan): void {
+            if (config('laravel-subscriptions.stripe_enabled')) {
+                $stripe = new \Stripe\StripeClient(
+                    config('cashier.secret')
+                );
+                $provider = $plan->providers()->where('provider', 'stripe')->first();
+                $stripeProduct = $stripe->products->retrieve($provider->provider_product_id);
+                $stripePrice = $stripe->prices->retrieve($provider->provider_price_id);
+                $stripe->products->update($stripeProduct->id, [
+                    'name' => $plan->name,
+                    'description' => $plan->description,
+                ]);
+                if ($plan->price != $stripePrice->unit_amount / 100 || $plan->currency != $stripePrice->currency || $plan->invoice_interval != $stripePrice->recurring->interval || $plan->invoice_period != $stripePrice->recurring->interval_count) {
+                }
+
+                $price = $stripe->prices->create([
+                    'product' => $stripeProduct->id,
+                    'currency' => $plan->currency,
+                    'unit_amount' => $plan->price * 100,
+                    'recurring' => [
+                        'interval' => $plan->invoice_interval,
+                        'interval_count' => $plan->invoice_period,
+                    ],
+                ]);
+                $stripe->products->update($stripeProduct->id, [
+                    'default_price' => $price->id,
+                ]);
+                $stripe->prices->update($stripePrice->id, [
+                    'active' => false
+                ]);
+                $plan->providers()->where('provider', 'stripe')->update([
+                    'provider_price_id' => $price->id,
+                ]);
+            }
+        });
     }
 
     public function getSlugOptions(): SlugOptions
@@ -180,5 +243,10 @@ class Plan extends Model implements Sortable
         $this->update(['is_active' => false]);
 
         return $this;
+    }
+
+    public function providers(): HasMany
+    {
+        return $this->hasMany(config('laravel-subscriptions.models.plan_provider'));
     }
 }

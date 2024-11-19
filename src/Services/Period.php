@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions\Services;
+namespace Aercode\Subscriptions\Services;
 
 use Carbon\Carbon;
 

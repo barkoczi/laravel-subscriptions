@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Laravelcm\Subscriptions\SubscriptionServiceProvider;
+use Aercode\Subscriptions\SubscriptionServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Models\User;
 

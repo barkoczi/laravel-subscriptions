@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions\Traits;
+namespace Aercode\Subscriptions\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Laravelcm\Subscriptions\Models\Plan;
-use Laravelcm\Subscriptions\Models\Subscription;
-use Laravelcm\Subscriptions\Services\Period;
+use Aercode\Subscriptions\Models\Plan;
+use Aercode\Subscriptions\Models\Subscription;
+use Aercode\Subscriptions\Services\Period;
 
 trait HasPlanSubscriptions
 {

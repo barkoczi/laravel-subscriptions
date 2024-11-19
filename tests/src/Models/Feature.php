@@ -6,7 +6,7 @@ namespace Tests\Models;
 
 use Tests\Database\Factories\FeatureFactory;
 
-class Feature extends \Laravelcm\Subscriptions\Models\Feature
+class Feature extends \Aercode\Subscriptions\Models\Feature
 {
     protected static function newFactory(): FeatureFactory
     {

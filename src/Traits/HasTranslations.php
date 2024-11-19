@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laravelcm\Subscriptions\Traits;
+namespace Aercode\Subscriptions\Traits;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -33,7 +33,7 @@ trait HasTranslations
 
             $value = array_filter(
                 json_decode($this->getAttributes()[$key] ?? '' ?: '{}', true) ?: [],
-                fn ($value) => $value !== null && $value !== ''
+                fn($value) => $value !== null && $value !== ''
             );
 
             // Inject default translation if none supplied
@@ -63,7 +63,7 @@ trait HasTranslations
 
     public function attributesToArray(): array
     {
-        $values = array_map(fn ($attribute) => $this->getTranslation($attribute, config('app.locale')) ?: null, $keys = $this->getTranslatableAttributes());
+        $values = array_map(fn($attribute) => $this->getTranslation($attribute, config('app.locale')) ?: null, $keys = $this->getTranslatableAttributes());
 
         return array_replace(parent::attributesToArray(), array_combine($keys, $values));
     }

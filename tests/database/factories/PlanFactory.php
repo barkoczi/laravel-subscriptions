@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Laravelcm\Subscriptions\Interval;
+use Aercode\Subscriptions\Interval;
 use Tests\Models\Plan;
 
 class PlanFactory extends Factory

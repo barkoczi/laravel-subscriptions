@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Laravelcm\Subscriptions\Models\Subscription;
+use Aercode\Subscriptions\Models\Subscription;
 use Spatie\TestTime\TestTime;
 use Tests\Models\Feature;
 use Tests\Models\Plan;

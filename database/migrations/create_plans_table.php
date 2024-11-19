@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
+use Aercode\Subscriptions\Interval;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Laravelcm\Subscriptions\Interval;
 
 return new class extends Migration
 {
@@ -32,14 +32,22 @@ return new class extends Migration
             $table->unsignedTinyInteger('prorate_extend_due')->nullable();
             $table->unsignedSmallInteger('active_subscribers_limit')->nullable();
             $table->unsignedSmallInteger('sort_order')->default(0);
-
             $table->timestamps();
             $table->softDeletes();
+        });
+        Schema::create(config('laravel-subscriptions.tables.plans_providers'), function (Blueprint $table): void {
+            $table->id();
+            $table->foreignId('plan_id')->constrained(config('laravel-subscriptions.tables.plans'));
+            $table->string('provider')->index();
+            $table->string('provider_product_id')->unique();
+            $table->string('provider_price_id')->unique();
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
         Schema::dropIfExists(config('laravel-subscriptions.tables.plans'));
+        Schema::dropIfExists(config('laravel-subscriptions.tables.plans_providers'));
     }
 };

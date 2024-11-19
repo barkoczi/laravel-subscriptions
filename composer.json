@@ -1,5 +1,5 @@
 {
-  "name": "laravelcm/laravel-subscriptions",
+  "name": "aercode/laravel-subscription",
   "description": "Laravel Subscriptions is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.",
   "type": "library",
   "keywords": [
@@ -15,9 +15,9 @@
   "homepage": "https://laravel.cm",
   "support": {
     "email": "support@laravel.cm",
-    "issues": "https://github.com/laravelcm/laravel-subscriptions/issues",
-    "source": "https://github.com/laravelcm/laravel-subscriptions",
-    "docs": "https://github.com/laravelcm/laravel-subscriptions/blob/main/README.md"
+    "issues": "https://github.com/barkoczi/laravel-subscriptions/issues",
+    "source": "https://github.com/barkoczi/laravel-subscriptions",
+    "docs": "https://github.com/barkoczi/laravel-subscriptions/blob/main/README.md"
   },
   "authors": [
     {
@@ -27,7 +27,7 @@
     },
     {
       "name": "The Generous Laravel Community",
-      "homepage": "https://github.com/laravelcm/laravel-subscriptions/contributors"
+      "homepage": "https://github.com/barkoczi/laravel-subscriptions/contributors"
     }
   ],
   "require": {
@@ -50,7 +50,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Laravelcm\\Subscriptions\\": "src"
+      "Aercode\\Subscriptions\\": "src"
     }
   },
   "autoload-dev": {
@@ -75,7 +75,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Laravelcm\\Subscriptions\\SubscriptionServiceProvider"
+        "Aercode\\Subscriptions\\SubscriptionServiceProvider"
       ]
     }
   },
