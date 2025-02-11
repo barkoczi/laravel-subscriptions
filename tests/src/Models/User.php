@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Models;
 
+use Aercode\Subscriptions\Traits\HasPlanSubscriptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Aercode\Subscriptions\Traits\HasPlanSubscriptions;
 use Tests\Database\Factories\UserFactory;
 
 final class User extends Authenticatable

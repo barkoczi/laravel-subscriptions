@@ -11,6 +11,13 @@ return new class extends Migration
 {
     public function up(): void
     {
+
+        Schema::create('vat', function (Blueprint $table) {
+            $table->id();
+            $table->decimal('rate', 10, 2)->unique();
+            $table->timestamps();
+        });
+
         Schema::create(config('laravel-subscriptions.tables.plans'), function (Blueprint $table): void {
             $table->id();
 
@@ -19,7 +26,7 @@ return new class extends Migration
             $table->json('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->decimal('price')->default('0.00');
-            $table->decimal('signup_fee')->default('0.00');
+            $table->foreignId('vat_id')->nullable()->constrained('vat');
             $table->string('currency', 3);
             $table->unsignedSmallInteger('trial_period')->default(0);
             $table->string('trial_interval')->default(Interval::DAY->value);
@@ -47,7 +54,9 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists(config('laravel-subscriptions.tables.plans'));
+
         Schema::dropIfExists(config('laravel-subscriptions.tables.plans_providers'));
+        Schema::dropIfExists(config('laravel-subscriptions.tables.plans'));
+        Schema::dropIfExists('vat');
     }
 };

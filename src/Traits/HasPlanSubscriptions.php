@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Aercode\Subscriptions\Traits;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Aercode\Subscriptions\Models\Plan;
 use Aercode\Subscriptions\Models\Subscription;
 use Aercode\Subscriptions\Services\Period;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait HasPlanSubscriptions
 {
@@ -40,7 +40,7 @@ trait HasPlanSubscriptions
 
     public function planSubscription(string $subscriptionSlug): ?Subscription
     {
-        return $this->planSubscriptions()->where('slug', 'like', '%' . $subscriptionSlug . '%')->first();
+        return $this->planSubscriptions()->where('slug', 'like', '%'.$subscriptionSlug.'%')->first();
     }
 
     public function subscribedPlans(): Collection

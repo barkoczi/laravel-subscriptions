@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlanProvider extends Model
 {
-
     public function getTable(): string
     {
         return config('laravel-subscriptions.tables.plans_providers');
@@ -20,7 +19,6 @@ class PlanProvider extends Model
         'provider_product_id',
         'provider_price_id',
     ];
-
 
     public function plan(): BelongsTo
     {

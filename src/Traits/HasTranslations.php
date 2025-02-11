@@ -33,7 +33,7 @@ trait HasTranslations
 
             $value = array_filter(
                 json_decode($this->getAttributes()[$key] ?? '' ?: '{}', true) ?: [],
-                fn($value) => $value !== null && $value !== ''
+                fn ($value) => $value !== null && $value !== ''
             );
 
             // Inject default translation if none supplied
@@ -41,7 +41,7 @@ trait HasTranslations
                 $oldValue = $value;
 
                 if ($this->hasSetMutator($key)) {
-                    $method = 'set' . Str::studly($key) . 'Attribute';
+                    $method = 'set'.Str::studly($key).'Attribute';
                     $value = $this->{$method}($value);
                 }
 
@@ -63,7 +63,7 @@ trait HasTranslations
 
     public function attributesToArray(): array
     {
-        $values = array_map(fn($attribute) => $this->getTranslation($attribute, config('app.locale')) ?: null, $keys = $this->getTranslatableAttributes());
+        $values = array_map(fn ($attribute) => $this->getTranslation($attribute, config('app.locale')) ?: null, $keys = $this->getTranslatableAttributes());
 
         return array_replace(parent::attributesToArray(), array_combine($keys, $values));
     }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Aercode\Subscriptions\Models;
 
+use Aercode\Subscriptions\Interval;
 use Aercode\Subscriptions\Traits\HasSlug;
 use Aercode\Subscriptions\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\Sortable;
@@ -78,7 +80,7 @@ class Plan extends Model implements Sortable
         'description',
         'is_active',
         'price',
-        'signup_fee',
+        'vat',
         'currency',
         'trial_period',
         'trial_interval',
@@ -98,6 +100,13 @@ class Plan extends Model implements Sortable
         'price' => 'float',
         'signup_fee' => 'float',
         'deleted_at' => 'datetime',
+        'trial_period' => 'integer',
+        'invoice_period' => 'integer',
+        'grace_period' => 'integer',
+        'prorate_day' => 'integer',
+        'invoice_interval' => Interval::class,
+        'trial_interval' => Interval::class,
+        'grace_interval' => Interval::class,
     ];
 
     /**
@@ -126,6 +135,14 @@ class Plan extends Model implements Sortable
         static::deleted(function ($plan): void {
             $plan->features()->delete();
             $plan->subscriptions()->delete();
+            //delete stripe products
+            if (config('laravel-subscriptions.stripe_enabled')) {
+                $stripe = new \Stripe\StripeClient(
+                    config('cashier.secret')
+                );
+                $provider = $plan->providers()->where('provider', 'stripe')->first();
+                $stripe->products->delete($provider->provider_product_id);
+            }
         });
 
         static::created(function ($plan): void {
@@ -141,7 +158,7 @@ class Plan extends Model implements Sortable
                         'currency' => $plan->currency,
                         'unit_amount' => $plan->price * 100,
                         'recurring' => [
-                            'interval' => $plan->invoice_interval,
+                            'interval' => $plan->invoice_interval->getLabel(),
                             'interval_count' => $plan->invoice_period,
                         ],
                     ],
@@ -167,7 +184,7 @@ class Plan extends Model implements Sortable
                     'name' => $plan->name,
                     'description' => $plan->description,
                 ]);
-                if ($plan->price != $stripePrice->unit_amount / 100 || $plan->currency != $stripePrice->currency || $plan->invoice_interval != $stripePrice->recurring->interval || $plan->invoice_period != $stripePrice->recurring->interval_count) {
+                if ($plan->price != $stripePrice->unit_amount / 100 || $plan->currency != $stripePrice->currency || $plan->invoice_interval->value != $stripePrice->recurring->interval || $plan->invoice_period != $stripePrice->recurring->interval_count) {
                 }
 
                 $price = $stripe->prices->create([
@@ -175,7 +192,7 @@ class Plan extends Model implements Sortable
                     'currency' => $plan->currency,
                     'unit_amount' => $plan->price * 100,
                     'recurring' => [
-                        'interval' => $plan->invoice_interval,
+                        'interval' => $plan->invoice_interval->value,
                         'interval_count' => $plan->invoice_period,
                     ],
                 ]);
@@ -183,13 +200,30 @@ class Plan extends Model implements Sortable
                     'default_price' => $price->id,
                 ]);
                 $stripe->prices->update($stripePrice->id, [
-                    'active' => false
+                    'active' => false,
                 ]);
                 $plan->providers()->where('provider', 'stripe')->update([
                     'provider_price_id' => $price->id,
                 ]);
             }
         });
+    }
+
+    /**
+     * Create default features for the plan
+     */
+    public function createDefaultFeatures(array $features): void
+    {
+        foreach ($features as $slug => $feature) {
+            if (! $this->features()->where('slug', $slug)->exists()) {
+                $this->features()->create([...$feature, 'slug' => $slug]);
+            }
+        }
+    }
+
+    public function viewComponentFolder(): string
+    {
+        return 'plan';
     }
 
     public function getSlugOptions(): SlugOptions
@@ -248,5 +282,15 @@ class Plan extends Model implements Sortable
     public function providers(): HasMany
     {
         return $this->hasMany(config('laravel-subscriptions.models.plan_provider'));
+    }
+
+    public function vat(): BelongsTo
+    {
+        return $this->belongsTo(Vat::class);
+    }
+
+    public function getGrossPriceAttribute(): float
+    {
+        return round($this->price * (100 + $this->vat->rate) / 100, 2);
     }
 }

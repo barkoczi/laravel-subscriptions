@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Aercode\Subscriptions\Models;
 
+use Aercode\Subscriptions\Interval;
+use Aercode\Subscriptions\Services\Period;
+use Aercode\Subscriptions\Traits\BelongsToPlan;
+use Aercode\Subscriptions\Traits\HasSlug;
+use Aercode\Subscriptions\Traits\HasTranslations;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,10 +17,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Aercode\Subscriptions\Services\Period;
-use Aercode\Subscriptions\Traits\BelongsToPlan;
-use Aercode\Subscriptions\Traits\HasSlug;
-use Aercode\Subscriptions\Traits\HasTranslations;
 use LogicException;
 use Spatie\Sluggable\SlugOptions;
 
@@ -284,7 +285,7 @@ class Subscription extends Model
      *
      * @return $this
      */
-    protected function setNewPeriod(string $invoice_interval = '', ?int $invoice_period = null, ?Carbon $start = null): self
+    protected function setNewPeriod(?Interval $invoice_interval = null, ?int $invoice_period = null, ?Carbon $start = null): self
     {
         if (empty($invoice_interval)) {
             $invoice_interval = $this->plan->invoice_interval;
@@ -338,7 +339,7 @@ class Subscription extends Model
 
     public function reduceFeatureUsage(string $featureSlug, int $uses = 1): ?SubscriptionUsage
     {
-        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
+        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
 
         if ($usage === null) {
             return null;
@@ -357,7 +358,7 @@ class Subscription extends Model
     public function canUseFeature(string $featureSlug): bool
     {
         $featureValue = $this->getFeatureValue($featureSlug);
-        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
+        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
 
         if ($featureValue === 'true') {
             return true;
@@ -378,7 +379,7 @@ class Subscription extends Model
      */
     public function getFeatureUsage(string $featureSlug): int
     {
-        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
+        $usage = $this->usage()->byFeatureSlug($featureSlug, $this->plan_id)->first();
 
         return (! $usage || $usage->expired()) ? 0 : $usage->used;
     }

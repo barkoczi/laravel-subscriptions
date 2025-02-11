@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create(config('laravel-subscriptions.tables.features'), function (Blueprint $table): void {
             $table->id();
 
-            $table->foreignIdFor(config('laravel-subscriptions.models.plan'));
+            $table->foreignId('plan_id')->constrained(config('laravel-subscriptions.tables.plans'))->cascadeOnDelete();
             $table->json('name');
             $table->string('slug')->index();
             $table->json('description')->nullable();

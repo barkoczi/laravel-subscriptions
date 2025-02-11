@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Aercode\Subscriptions\Models;
 
+use Aercode\Subscriptions\Interval;
+use Aercode\Subscriptions\Services\Period;
+use Aercode\Subscriptions\Traits\BelongsToPlan;
+use Aercode\Subscriptions\Traits\HasSlug;
+use Aercode\Subscriptions\Traits\HasTranslations;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Aercode\Subscriptions\Services\Period;
-use Aercode\Subscriptions\Traits\BelongsToPlan;
-use Aercode\Subscriptions\Traits\HasSlug;
-use Aercode\Subscriptions\Traits\HasTranslations;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\SlugOptions;
@@ -24,7 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $description
  * @property string $value
  * @property int $resettable_period
- * @property string $resettable_interval
+ * @property Interval $resettable_interval
  * @property int $sort_order
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -71,7 +72,7 @@ class Feature extends Model implements Sortable
         'slug' => 'string',
         'value' => 'string',
         'resettable_period' => 'integer',
-        'resettable_interval' => 'string',
+        'resettable_interval' => Interval::class,
         'sort_order' => 'integer',
         'deleted_at' => 'datetime',
     ];
@@ -110,7 +111,7 @@ class Feature extends Model implements Sortable
             ->doNotGenerateSlugsOnUpdate()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug')
-            ->extraScope(fn($builder) => $builder->where('plan_id', $this->plan_id));;
+            ->extraScope(fn ($builder) => $builder->where('plan_id', $this->plan_id));
     }
 
     public function usage(): HasMany

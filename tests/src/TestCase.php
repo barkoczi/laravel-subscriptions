@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Aercode\Subscriptions\SubscriptionServiceProvider;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Models\User;
 
@@ -23,8 +23,8 @@ abstract class TestCase extends BaseTestCase
     protected function defineDatabaseMigrations(): void
     {
         $this->loadMigrationsFrom([
-            __DIR__ . '/../database/migrations',
-            __DIR__ . '/../../database/migrations',
+            __DIR__.'/../database/migrations',
+            __DIR__.'/../../database/migrations',
         ]);
     }
 

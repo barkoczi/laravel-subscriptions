@@ -64,10 +64,10 @@ class SubscriptionUsage extends Model
         return $this->belongsTo(config('laravel-subscriptions.models.subscription'), 'subscription_id', 'id', 'subscription');
     }
 
-    public function scopeByFeatureSlug(Builder $builder, string $featureSlug): Builder
+    public function scopeByFeatureSlug(Builder $builder, string $featureSlug, int $plan_id): Builder
     {
         $model = config('laravel-subscriptions.models.feature', Feature::class);
-        $feature = $model::where('slug', $featureSlug)->first();
+        $feature = $model::where('slug', $featureSlug)->where('plan_id', $plan_id)->first();
 
         return $builder->where('feature_id', $feature ? $feature->getKey() : null);
     }

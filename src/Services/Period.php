@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Aercode\Subscriptions\Services;
 
+use Aercode\Subscriptions\Interval;
 use Carbon\Carbon;
 
 final class Period
@@ -12,7 +13,7 @@ final class Period
 
     private Carbon|string $end;
 
-    private string $interval;
+    private Interval $interval;
 
     private int $period;
 
@@ -22,7 +23,7 @@ final class Period
      *
      * @return void
      */
-    public function __construct(string $interval = 'month', int $count = 1, ?Carbon $start = null)
+    public function __construct(Interval $interval = Interval::MONTH, int $count = 1, ?Carbon $start = null)
     {
         $this->interval = $interval;
 
@@ -36,7 +37,7 @@ final class Period
 
         $this->period = $count;
         $start = clone $this->start;
-        $method = 'add' . ucfirst($this->interval) . 's';
+        $method = 'add'.ucfirst($this->interval->value).'s';
         $this->end = $start->{$method}($this->period);
     }
 
@@ -50,7 +51,7 @@ final class Period
         return $this->end;
     }
 
-    public function getInterval(): string
+    public function getInterval(): Interval
     {
         return $this->interval;
     }
