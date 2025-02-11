@@ -12,18 +12,18 @@
     "subscription"
   ],
   "license": "MIT",
-  "homepage": "https://laravel.cm",
+  "homepage": "https://aercode.com",
   "support": {
-    "email": "support@laravel.cm",
+    "email": "info@aercode.com",
     "issues": "https://github.com/barkoczi/laravel-subscriptions/issues",
     "source": "https://github.com/barkoczi/laravel-subscriptions",
     "docs": "https://github.com/barkoczi/laravel-subscriptions/blob/main/README.md"
   },
   "authors": [
     {
-      "name": "Arthur Monney",
-      "homepage": "https://arthurmonney.me",
-      "email": "arthur@laravel.cm"
+      "name": "Roland Barkoczi",
+      "homepage": "https://aercode.com",
+      "email": "info@aercode.com"
     },
     {
       "name": "The Generous Laravel Community",
